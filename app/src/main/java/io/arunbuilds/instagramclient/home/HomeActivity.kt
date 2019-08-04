@@ -2,6 +2,7 @@ package io.arunbuilds.instagramclient.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,6 +31,13 @@ class HomeActivity : AppCompatActivity() {
         rvList.layoutManager = LinearLayoutManager(this)
         rvList.adapter = userDataListAdapter
 
+
+        swiperefresh.setOnRefreshListener {
+            swiperefresh.isRefreshing = true
+            viewModel.loadfromDb()
+            swiperefresh.isRefreshing = false
+        }
+
         viewModel.mutableListLiveData.observe(this, Observer {
             ivError.visibility = View.GONE
             userDataListAdapter.updateDataSet(it)
@@ -37,9 +45,11 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.errorLiveData.observe(this, Observer {
             ivError.visibility = View.VISIBLE
+            Toast.makeText(this, "Error Occured ", Toast.LENGTH_LONG).show()
         })
-    }
 
+
+    }
 
 
 

@@ -2,6 +2,8 @@ package io.arunbuilds.instagramclient
 
 import android.app.Application
 import android.util.Log
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import androidx.work.WorkManager
 import io.arunbuilds.instagramclient.Db.UserAppDatabase
 import androidx.work.OneTimeWorkRequest
@@ -14,7 +16,10 @@ class InstagramClient : Application() {
         super.onCreate()
         Log.d(TAG, "OnCreate Of InstagramClient")
 
-        val oneshotwork: OneTimeWorkRequest = OneTimeWorkRequest.Builder(FetchDataWorker::class.java).build()
+        var constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val oneshotwork: OneTimeWorkRequest = OneTimeWorkRequest.Builder(FetchDataWorker::class.java).setConstraints(constraints).build()
         WorkManager.getInstance(this).enqueue(oneshotwork)
     }
 }

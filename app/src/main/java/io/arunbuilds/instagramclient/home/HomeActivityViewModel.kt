@@ -38,7 +38,7 @@ class HomeActivityViewModel constructor(
 
     }
 
-    private fun loadfromDb() {
+     fun loadfromDb() {
 
         val d = UserAppDatabase.getInstance(getApplication()).userdataDAO.getUserData()
             .subscribeOn(Schedulers.io())
