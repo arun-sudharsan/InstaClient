@@ -54,10 +54,12 @@ class MainActivity : AppCompatActivity() {
                     }
                     var result =
                         rawJson.substring(
-                            21
-                            , rawJson.indexOf(",\"hostname\":\"www.instagram.com\"")
+                            (275)
+                            , rawJson.indexOf(",\"connected_fb_page\":null")
                         )
-                    result += "}"
+
+                    result = "{\"$result"
+                    result = "$result}}}"
                     result
                 }
                 .observeOn(AndroidSchedulers.mainThread())
