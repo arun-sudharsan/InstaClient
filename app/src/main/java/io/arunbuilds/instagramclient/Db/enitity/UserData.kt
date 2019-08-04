@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import io.arunbuilds.instagramclient.model.Graphql
 import java.util.*
 
 @Entity(tableName = "users")
@@ -18,7 +19,9 @@ data class UserData(
     @ColumnInfo(name = "user_bio")
     val userbio: String,
     val date: Date
-)
+) {
+    constructor() : this(0, "username","","", Date())
+}
 
 
 class Converters {

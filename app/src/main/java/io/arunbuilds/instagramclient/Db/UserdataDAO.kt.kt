@@ -22,4 +22,7 @@ interface UserdataDAO {
 
     @Query("select * from users where user_id ==:id")
     fun getUserDatabyId(id:Long):Single<UserData>
+
+    @Query("select * from users where user_id = (SELECT MAX(user_id)  FROM users)")
+    fun getLatestUserData(): Single<UserData>
 }

@@ -1,4 +1,4 @@
-package io.arunbuilds.instagramclient.Utils
+package io.arunbuilds.instagramclient.utils
 
 /*
  * Copyright 2012 Google Inc.
@@ -16,13 +16,16 @@ package io.arunbuilds.instagramclient.Utils
  * limitations under the License.
  */
 
-private val SECOND_MILLIS = 1000
-private val MINUTE_MILLIS = 60 * SECOND_MILLIS
-private val HOUR_MILLIS = 60 * MINUTE_MILLIS
-private val DAY_MILLIS = 24 * HOUR_MILLIS
+
+object Helper {
 
 
-fun getTimeAgo(time: Long): String? {
+    private val SECOND_MILLIS = 1000
+    private val MINUTE_MILLIS = 60 * SECOND_MILLIS
+    private val HOUR_MILLIS = 60 * MINUTE_MILLIS
+    private val DAY_MILLIS = 24 * HOUR_MILLIS
+
+    fun getTimeAgofromNow(time: Long): String {
     var instanceTime = time
     if (instanceTime < 1000000000000L) {
         // if timestamp given in seconds, convert to millis
@@ -31,7 +34,7 @@ fun getTimeAgo(time: Long): String? {
 
     val now = System.currentTimeMillis()
     if (instanceTime > now || instanceTime <= 0) {
-        return null
+        return "Oops :P"
     }
 
     val diff = now - instanceTime
@@ -44,4 +47,5 @@ fun getTimeAgo(time: Long): String? {
         diff < 48 * HOUR_MILLIS -> "yesterday"
         else -> (diff / DAY_MILLIS).toString() + " days ago"
     }
+}
 }

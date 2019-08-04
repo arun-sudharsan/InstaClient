@@ -17,14 +17,14 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var userDataListAdapter: UserDataListAdapter
     private val userlist = listOf<UserData>()
-    lateinit var viewModel: MainActivityViewModel
+    lateinit var viewModel: HomeActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val factory = ViewModelFactory(application)
-        viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory).get(HomeActivityViewModel::class.java)
         userDataListAdapter =
             UserDataListAdapter(userlist)
         rvList.layoutManager = LinearLayoutManager(this)
