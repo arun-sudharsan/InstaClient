@@ -1,4 +1,4 @@
-package io.arunbuilds.instagramclient
+package io.arunbuilds.instagramclient.home
 
 import android.annotation.SuppressLint
 import android.app.Application

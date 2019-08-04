@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Instagram Client</string>
+    <string name="profile_picture_of_the_user">Profile picture of the user</string>
 </resources>
