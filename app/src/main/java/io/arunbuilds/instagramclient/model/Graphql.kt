@@ -1,18 +1,20 @@
 package io.arunbuilds.instagramclient.model
 
+import androidx.room.Entity
 import java.util.ArrayList
 
-data class Graphql (var user: User? = null)
-
+data class Graphql (val user: User? = null)
+/**
+ * User Data class to represent the details of the user with @param `username`
+* */
+@Entity
 data class User(
     var biography: String? = null,
     var blocked_by_viewer: Boolean = false,
     var country_block: Boolean = false,
     var external_url: String? = null,
     var external_url_linkshimmed: String? = null,
-    var edge_followed_by: Edgefollowedby? = null,
     var followed_by_viewer: Boolean = false,
-    var edgefollow: Edgefollow? = null,
     var follows_viewer: Boolean = false,
     var full_name: String? = null,
     var has_channel: Boolean = false,
@@ -25,18 +27,8 @@ data class User(
     var business_category_name: String? = null,
     var is_private: Boolean = false,
     var is_verified: Boolean = false,
-    var edgemutualfollowedby: Edgemutualfollowedby? = null,
     var profile_pic_url: String? = null,
     var profile_pic_url_hd: String? = null,
     var requested_by_viewer: Boolean = false,
     var username: String? = null
-)
-
-data class Edgefollowedby(var count: Float = 0.toFloat())
-
-data class Edgefollow( var count: Float = 0.toFloat())
-
-data class Edgemutualfollowedby(
-    var count: Float = 0.toFloat(),
-    var edges: ArrayList<Any> = ArrayList()
 )
