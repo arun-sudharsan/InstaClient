@@ -1,12 +1,84 @@
 package io.arunbuilds.instagramclient
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jsoup.Jsoup
+
 
 class MainActivity : AppCompatActivity() {
-
+    val subss: CompositeDisposable = CompositeDisposable()
+    val TAG = MainActivity::class.java.name.toString()
+    val url = "https://instagram.com/arunm619"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        fetchButton.setOnClickListener {
+            scrapData()
+        }
+
+    }
+
+    private fun scrapData() {
+        getDatafromInstagram()
+    }
+
+    private fun updateViews(doc: Any) {
+        tvData.text = doc.toString()
+    }
+
+    private fun getDatafromInstagram() {
+        val disposable =
+            Observable.just(true)
+                .subscribeOn(Schedulers.io())
+                .map {
+                    val document = Jsoup.connect(url).get()
+
+
+                    var rawJson = ""
+                    val scriptElements = document.getElementsByTag("script")
+                    for (element in scriptElements) {
+                        for (node in element.dataNodes()) {
+                            if (node.wholeData.startsWith("window._sharedData"))
+                                rawJson = (node.wholeData)
+                        }
+
+                    }
+                    var result =
+                        rawJson.substring(
+                            21
+                            , rawJson.indexOf(",\"hostname\":\"www.instagram.com\"")
+                        )
+                    result += "}"
+                    result
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    updateViews(it)
+                    Log.d(TAG, it)
+
+                }, {
+                    updateViews("Error occured - ${it.message}")
+                    Log.d(TAG, "error - ${it.cause} ${it.localizedMessage}")
+                }, {
+
+                    Toast.makeText(this, "Everything success", Toast.LENGTH_LONG).show()
+                })
+
+        subss.add(disposable)
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        subss.dispose()
     }
 }
