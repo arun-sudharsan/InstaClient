@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/fullprofilepic"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:maxHeight="400dp"
+            android:maxWidth="400dp"
+            android:layout_gravity="center"
+            tools:srcCompat="@tools:sample/avatars[5]" />
+
+
+        <TextView
+            android:id="@+id/bioText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="16sp"
+            tools:text="A big bio for me." />
+
+
+        <TextView
+            android:id="@+id/dataPosted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="16sp"
+            tools:text="DD MMM YYYY" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/shareBioButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/share_bio" />
+
+
+            <Button
+                android:id="@+id/shareImageButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/share_dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

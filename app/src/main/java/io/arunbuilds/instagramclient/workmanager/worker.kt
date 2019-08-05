@@ -8,15 +8,16 @@ import com.google.gson.Gson
 import io.arunbuilds.instagramclient.Db.UserAppDatabase
 import io.arunbuilds.instagramclient.Db.enitity.UserData
 import io.arunbuilds.instagramclient.model.Graphql
+import io.arunbuilds.instagramclient.notifications.Notifications.displayNotification
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.util.*
 
-const val url = "https://instagram.com/arunm619"
+const val url = "https://instagram.com/srimathikrishnan"
 val TAG: String = FetchDataWorker::class.java.name
-val testing = true
+const val testing = false
 
 class FetchDataWorker constructor(
     private val context: Context,
@@ -91,11 +92,15 @@ class FetchDataWorker constructor(
 
             val d = UserAppDatabase.getInstance(applicationContext).userdataDAO.getLatestUserData()
                 .map {
-                    if (it.userbio != userData.userbio || it.userprofilepic != userData.userprofilepic) {
+
+                    val newBio = it.userbio != userData.userbio
+                    val newPic = it.userprofilepic != userData.userprofilepic
+                    if (newBio || newPic) {
                         UserAppDatabase.getInstance(applicationContext).userdataDAO.addUserData(
                             userData
                         )
                         Log.d(TAG, "Saving because its new.")
+                        buildNotifications(newBio, it)
                         it
                     } else {
 
@@ -125,6 +130,17 @@ class FetchDataWorker constructor(
 
         }
 
+    }
+
+    private fun buildNotifications(
+        newBio: Boolean,
+        data: UserData
+    ) {
+        if (newBio) {
+            displayNotification(context, "Bio Updated", data.userbio)
+        } else {
+            displayNotification(context, "Profile Picture Updated", "Click to view :P")
+        }
     }
 
 

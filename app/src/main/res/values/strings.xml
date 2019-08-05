@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Instagram Client</string>
     <string name="profile_picture_of_the_user">Profile picture of the user</string>
+    <string name="share_bio">Share Bio</string>
+    <string name="share_dp">Share DP</string>
+    <string name="send_to">Send bio to</string>
 </resources>
