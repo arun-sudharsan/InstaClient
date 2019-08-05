@@ -2,8 +2,6 @@ package io.arunbuilds.instagramclient.workmanager
 
 import android.content.Context
 import android.util.Log
-import androidx.work.Constraints
-import androidx.work.NetworkType
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
@@ -16,8 +14,9 @@ import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.util.*
 
-const val url = "https://instagram.com/srimathikrishnan"
+const val url = "https://instagram.com/arunm619"
 val TAG: String = FetchDataWorker::class.java.name
+val testing = true
 
 class FetchDataWorker constructor(
     private val context: Context,
@@ -87,7 +86,7 @@ class FetchDataWorker constructor(
         val userData = modelGraphQLtoUserData(graphql)
 
         if (userData.username == "username") {
-
+            Log.d(TAG, "Empty user data discarded")
         } else {
 
             val d = UserAppDatabase.getInstance(applicationContext).userdataDAO.getLatestUserData()
@@ -99,6 +98,12 @@ class FetchDataWorker constructor(
                         Log.d(TAG, "Saving because its new.")
                         it
                     } else {
+
+                        if (testing) {
+                            UserAppDatabase.getInstance(applicationContext).userdataDAO.addUserData(
+                                userData
+                            )
+                        }
                         Log.d(TAG, "Not Saving because its old.")
                         it
                     }

@@ -1,13 +1,16 @@
 package io.arunbuilds.instagramclient.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.WorkManager
 import io.arunbuilds.instagramclient.Db.enitity.UserData
+import io.arunbuilds.instagramclient.InstagramClient
 import io.arunbuilds.instagramclient.R
 import io.arunbuilds.instagramclient.home.adapter.UserDataListAdapter
 import io.arunbuilds.instagramclient.viewmodel.ViewModelFactory
@@ -28,7 +31,10 @@ class HomeActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, factory).get(HomeActivityViewModel::class.java)
         userDataListAdapter =
             UserDataListAdapter(userlist)
-        rvList.layoutManager = LinearLayoutManager(this)
+        rvList.layoutManager = LinearLayoutManager(this).also {
+            it.reverseLayout = true
+            it.stackFromEnd = true
+        }
         rvList.adapter = userDataListAdapter
 
 
@@ -48,6 +54,17 @@ class HomeActivity : AppCompatActivity() {
             Toast.makeText(this, "Error Occured ", Toast.LENGTH_LONG).show()
         })
 
+
+        WorkManager.getInstance(this).getWorkInfosByTagLiveData(InstagramClient.UNIQUE_TAG)
+            .observe(this,
+                Observer {
+                    it.forEach {
+
+                        Log.d("HomeActivity", it.state.toString())
+                    }
+
+
+                })
 
     }
 
